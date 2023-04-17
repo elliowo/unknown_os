@@ -12,16 +12,20 @@ pub extern "C" fn _start() -> ! {
     initialise_buffer();
     println!("unknown_os");
 
+    unknown_os::init();
+
     #[cfg(test)]
     test_main();
-    loop {}
+
+    println!("i did not crash :)");
+    unknown_os::hlt_loop();
 }
 
 #[cfg(not(test))]
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     println!("{}", _info);
-    loop {}
+    unknown_os::hlt_loop();
 }
 
 #[cfg(test)]
